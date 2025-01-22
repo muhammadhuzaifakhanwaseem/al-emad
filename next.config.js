@@ -1,53 +1,61 @@
-// next.config.js
+const baseApiUrl = process.env.NEXT_PUBLIC_API_URL;
+const imageDomain = process.env.NEXT_PUBLIC_IMAGE_DOMAIN;
 module.exports = {
     images: {
-        domains: ['10xksa.com'], // Add '10xksa.com' to the list of allowed image domains
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: imageDomain,
+                port: '',
+                pathname: '/**',
+            },
+        ],
     },
     async rewrites() {
         return [
             {
-                source: '/api/cars', // The local endpoint
-                destination: 'https://10xksa.com/rentify/api/v1/cars', // The external API endpoint
+                source: '/api/cars',
+                destination: `${baseApiUrl}/cars`,
             },
             {
-                source: '/api/cars/:id', // Local endpoint for fetching a single car
-                destination: 'https://10xksa.com/rentify/api/v1/cars/:id', // External API endpoint for fetching a single car
+                source: '/api/cars/:id',
+                destination: `${baseApiUrl}/cars/:id`,
             },
             {
-                source: '/api/car/booking', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/car/booking', // External API endpoint for car booking
+                source: '/api/car/booking',
+                destination: `${baseApiUrl}/car/booking`,
             },
             {
-                source: '/api/login', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/login', // External API endpoint for car booking
+                source: '/api/login',
+                destination: `${baseApiUrl}/login`,
             },
             {
-                source: '/api/register', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/register', // External API endpoint for car booking
+                source: '/api/register',
+                destination: `${baseApiUrl}/register`,
             },
             {
-                source: '/api/user/profile', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/user/profile', // External API endpoint for car booking
+                source: '/api/user/profile',
+                destination: `${baseApiUrl}/user/profile`,
             },
             {
-                source: '/api/user/profile/update', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/user/profile/update', // External API endpoint for car booking
+                source: '/api/user/profile/update',
+                destination: `${baseApiUrl}/user/profile/update`,
             },
             {
-                source: '/api/user/password/update', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/user/password/update', // External API endpoint for car booking
+                source: '/api/user/password/update',
+                destination: `${baseApiUrl}/user/password/update`,
             },
             {
-                source: '/api/my/bookings', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/my/bookings', // External API endpoint for car booking
+                source: '/api/my/bookings',
+                destination: `${baseApiUrl}/my/bookings`,
             },
             {
-                source: '/api/car/brands', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/car/brands', // External API endpoint for car booking
+                source: '/api/car/brands',
+                destination: `${baseApiUrl}/car/brands`,
             },
             {
-                source: '/api/car/type', // Local endpoint for car booking
-                destination: 'https://10xksa.com/rentify/api/v1/car/type', // External API endpoint for car booking
+                source: '/api/car/type',
+                destination: `${baseApiUrl}/car/type`,
             },
         ];
     },

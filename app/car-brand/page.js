@@ -4,28 +4,43 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Button, Card, CardMedia, Typography, Grid, Box } from "@mui/material";
 import Link from "next/link";
-import { useLoading } from '../../context/LoadingContext';
+import { useLoading } from '../context/LoadingContext';
 import SiteLayout from "@/app/components/Layouts/SiteLayout";
-import { useApi } from "../../context/ApiContext";
 import { ChevronLeft } from "@mui/icons-material";
+import { useSearchParams } from 'next/navigation';
 
 const CarDetailPage = () => {
   const { setLoading } = useLoading();
 
-  const { id } = useParams();
+  const searchParams = useSearchParams();
+   const id = searchParams.get('id');
   const [car, setCar] = useState(null);
   const [imageBasePath, setImageBasePath] = useState("");
 
   const [error, setError] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
 
-  const { getSingleCar } = useApi();
-
-  useEffect(async () => {
+  useEffect(() => {
     if (!id) return;
-    const fetchedCar = await getSingleCar(id);
-    setCar(fetchedCar?.data?.car?.car);
-    setImageBasePath(`${fetchedCar?.data?.car?.base_url}/${fetchedCar?.data?.car?.image_path}/`);
+
+    const fetchCar = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/cars/${id}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch car");
+        }
+        const data = await res.json();
+        setCar(data?.data?.car?.car);
+        setImageBasePath(`${data?.data?.car?.base_url}/${data?.data?.car?.image_path}/`);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCar();
   }, [id]);
 
   if (error) {
@@ -177,7 +192,7 @@ const CarDetailPage = () => {
               ))}
             </ul>
           </Box>
-
+          
         </Box>
       </SiteLayout>
     );

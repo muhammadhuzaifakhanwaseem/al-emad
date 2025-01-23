@@ -16,6 +16,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid2';
+import NavDropdown from "../NavDropdown";
 
 const SiteLayout = ({ children }) => {
   const router = useRouter();
@@ -115,239 +116,51 @@ const SiteLayout = ({ children }) => {
     <>
       <AppBar position="sticky" color="default">
         <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: '#000',
-                textDecoration: 'none',
-              }}
-            >
+          <Toolbar className="d-flex align-items-center justify-content-between" disableGutters>
+            <Link href={'/'} className="nav-link d-block fs-3 fw-bold me-2">
               Al Emad
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                onClick={handleOpenNavMenu}
-                color="#000"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{ display: { xs: 'block', md: 'none' } }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              LOGO
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {/* PAGES */}
-              <Link href="/" className={`ms-2 text-decoration-none ${router.pathname === "/" ? "text-primary" : "text-dark"}`}>
-                Home
-              </Link>
-              <Link href="/about-us" className={`ms-2 text-decoration-none ${router.pathname === "/contact" ? "text-primary" : "text-dark"}`}>
-                About Us
-              </Link>
-              <Link href="/contact" className={`ms-2 text-decoration-none ${router.pathname === "/contact" ? "text-primary" : "text-dark"}`}>
-                Contact
-              </Link>
-              <Box
-                onMouseEnter={() => setBrandHover(true)}
-                onMouseLeave={() => setBrandHover(false)}
-                sx={{
-                  position: "relative",
-                  display: "inline-block",
-                  cursor: "pointer",
-                }}
-              >
-                {/* The trigger element */}
-                <Box
-                  variant="subtitle1"
-                  component="div"
-                  sx={{ flexGrow: 1, cursor: "pointer" }}
-                  className="ms-2"
-                >
-                  Car Brands
-                </Box>
+            </Link>
+            <div>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                {/* PAGES */}
+                <Link href="/about-us" className={`ms-2 text-decoration-none ${router.pathname === "/contact" ? "text-primary" : "text-dark"}`}>
+                  About Us
+                </Link>
+                <Link href="/cheapest-car-rentals" className={`ms-2 text-decoration-none ${router.pathname === "/cheapest-car-rentals" ? "text-primary" : "text-dark"}`}>
+                  Rent a Car
+                </Link>
+                {brands &&
+                  <NavDropdown type={'brands'} title={'Car Brands'} items={brands?.data?.brands} imagePath={brands?.data?.base_url + "/" + brands?.data?.image_path + "/"} />
+                }
+                {types &&
+                  <NavDropdown type={'types'} title={'Car Categories'} items={types?.data?.types} imagePath={types?.data?.base_url + "/" + types?.data?.image_path + "/"} />
+                }
+                <Link href="/contact" className={`ms-2 text-decoration-none ${router.pathname === "/contact" ? "text-primary" : "text-dark"}`}>
+                  Contact
+                </Link>
               </Box>
-              <div
-                variant="subtitle1"
-                component="div"
-                sx={{ flexGrow: 1, cursor: "pointer" }}
-                onMouseEnter={handleOpenTypes} // For hover trigger
-                className={`ms-2 ${Boolean(anchorTypes) ? "text-primary" : "text-dark"}`}
-              >
-                Car Categories
-              </div>
-              {/* Brands Dropdown */}
-              <Box
-                onMouseEnter={() => setBrandHover(true)}
-                onMouseLeave={() => setBrandHover(false)}
-                sx={{
-                  position: "relative",
-                  display: "inline-block",
-                  cursor: "pointer",
-                }}
-              >
-                <Box
-                  variant="subtitle1"
-                  component="div"
-                  sx={{ flexGrow: 1, cursor: "pointer" }}
-                  className="ms-2"
-                >
-                  Car Brands
-                </Box>
-                {brandHover && (
-                  <Menu
-                    anchorEl={brandHover}
-                    open={Boolean(brandHover)}
-                    onClose={handleCloseTypes}
-                    MenuListProps={{
-                      onMouseLeave: handleCloseTypes,
-                    }}
-                    PaperProps={{
-                      sx: {
-
-                      },
-                    }}
-                  >
-                    <MenuItem disableRipple>
-                      <Grid container spacing={2}>
-                        {brands?.data?.brands?.map((brand, index) => (
-                          // <div key={brand.id}>
-                          <Stack
-                            direction="row"
-                            divider={<Divider orientation="vertical" flexItem />}
-                            spacing={2}
-                          >
-                            <Item>
-                              {brand.name}
-                              {brand?.image ?
-                                <Image
-                                  src={brands?.data?.base_url + "/" + brands?.data?.image_path + "/" + brand?.image}
-                                  alt={brand.name}
-                                  width={50}
-                                  height={50}
-                                  style={{
-                                    objectFit: "cover",
-                                    borderRadius: "8px",
-                                  }}
-                                /> :
-                                <Skeleton variant="rectangular" width={50} height={50} />
-                              }
-                            </Item>
-                          </Stack>
-                          // </div>
-                        ))}
-                      </Grid>
-                    </MenuItem>
-                  </Menu>
-                )}
-              </Box>
-              {/* Categories Dropdown */}
-              <Menu
-                anchorEl={anchorTypes}
-                open={Boolean(anchorTypes)}
-                onClose={handleCloseTypes}
-                MenuListProps={{
-                  onMouseLeave: handleCloseTypes, // Close on mouse leave
-                }}
-                PaperProps={{
-                  sx: {
-                    padding: "10px",
-                    borderRadius: "8px",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                  },
-                }}
-              >
-                <MenuItem disableRipple>
-                  <Grid container spacing={2}>
-                    {types?.data?.types?.map((type) => (
-                      <Grid
-                        item
-                        xs={3} // 4 items per row
-                        key={type.id}
-                        sx={{ textAlign: "center" }}
-                      >
-                        <Image
-                          src={types?.data?.base_url + "/" + types?.data?.image_path + "/" + type?.image}
-                          alt={type.name}
-                          width={80}
-                          height={80}
-                        />
-                        <Typography variant="body2">{type.name}</Typography>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </MenuItem>
-              </Menu>
-            </Box>
+            </div>
             <Box sx={{ flexGrow: 0 }}>
               <div className="d-flex align-items-center gap-2">
                 {userData?.token ? (
-                  <Typography variant="body2" sx={{ color: "#000" }}>
-                    HI! {userData?.user_info?.firstname}
-                  </Typography>
+                  <>
+                    <Typography variant="body2" sx={{ color: "#000" }}>
+                      HI! {userData?.user_info?.firstname}
+                    </Typography>
+                    <Tooltip title="Open settings">
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <Avatar alt={userData?.user_info?.firstname} src={userData?.token ? `${userData?.image_base_path + userData?.user_info?.image}` : "/static/images/avatar/2.jpg"} />
+                      </IconButton>
+                    </Tooltip>
+                  </>
                 ) : (
                   <>
                     <Link href="/login" className={`text-decoration-none ${router.pathname === "/login" ? "text-info" : "text-white"}`}>
                       Login
                     </Link>
-                    <Link href="/register" className={`text-decoration-none ${router.pathname === "/register" ? "text-info" : "text-white"}`}>
-                      Register
-                    </Link>
                   </>
                 )}
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    {userData?.token ? (
-                      <Avatar alt={userData?.user_info?.firstname} src={userData?.token ? `${userData?.image_base_path + userData?.user_info?.image}` : "/static/images/avatar/2.jpg"} />
-                    ) : ""}
-                  </IconButton>
-                </Tooltip>
+
               </div>
               <Menu
                 sx={{ mt: '45px' }}

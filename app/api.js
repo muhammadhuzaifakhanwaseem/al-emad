@@ -42,6 +42,36 @@ export async function fetchCars(page, limit = 10) {
     }
 }
 
+export async function fetchCarsByBrand(page, limit = 10, name) {
+    const API_URL = `/api/car/brand?page=${page}&limit=${limit}&name=${name}`;
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error("Failed to fetch cars");
+        }
+        const data = await response.json();
+        return data || { cars: [], total: 0 };
+    } catch (error) {
+        console.error("Error fetching cars:", error);
+        return { cars: [], total: 0 };
+    }
+}
+
+export async function fetchCarsByType(page, limit = 10, name) {
+    const API_URL = `/api/car/type?page=${page}&limit=${limit}&name=${name}`;
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error("Failed to fetch cars");
+        }
+        const data = await response.json();
+        return data || { cars: [], total: 0 };
+    } catch (error) {
+        console.error("Error fetching cars:", error);
+        return { cars: [], total: 0 };
+    }
+}
+
 export async function fetchSingleCar(id) {
     const API_URL = `/api/cars/${id}`;
     try {

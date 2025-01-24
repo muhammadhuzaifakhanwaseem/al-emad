@@ -21,11 +21,20 @@ const CarDetailPage = () => {
 
   const { getSingleCar } = useApi();
 
-  useEffect(async () => {
+  useEffect(() => {
     if (!id) return;
-    const fetchedCar = await getSingleCar(id);
-    setCar(fetchedCar?.data?.car?.car);
-    setImageBasePath(`${fetchedCar?.data?.car?.base_url}/${fetchedCar?.data?.car?.image_path}/`);
+
+    async function fetchData() {
+      try {
+        const fetchedCar = await getSingleCar(id);
+        setCar(fetchedCar?.data?.car?.car);
+        setImageBasePath(`${fetchedCar?.data?.car?.base_url}/${fetchedCar?.data?.car?.image_path}/`);
+      } catch (error) {
+        console.error('Error fetching car data:', error);
+      }
+    }
+
+    fetchData();
   }, [id]);
 
   if (error) {

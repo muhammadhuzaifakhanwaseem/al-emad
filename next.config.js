@@ -57,6 +57,14 @@ module.exports = {
                 source: '/api/car/type',
                 destination: `${baseApiUrl}/car/type`,
             },
+            {
+                source: '/api/car/brand',
+                destination: `${baseApiUrl}/car/brand`,
+            },
+            {
+                source: '/api/car/type',
+                destination: `${baseApiUrl}/car/type`,
+            },
         ];
     },
 };

@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useContext, useState } from "react";
-import { fetchCarBrands, fetchCarTypes, fetchCars, fetchSingleCar } from "../api";
+import { fetchCarBrands, fetchCarTypes, fetchCars, fetchSingleCar, fetchCarsByBrand, fetchCarsByType } from "../api";
 
 const ApiContext = createContext();
 
@@ -19,6 +19,8 @@ export function ApiProvider({ children }) {
         getBrands: () => fetchData(fetchCarBrands),
         getTypes: () => fetchData(fetchCarTypes),
         getCars: (page, limit) => fetchData(fetchCars, page, limit),
+        getCarsByBrand: (page, limit, name) => fetchData(fetchCarsByBrand, page, limit, name),
+        getCarsByType: (page, limit, name) => fetchData(fetchCarsByType, page, limit, name),
         getSingleCar: (id) => fetchData(fetchSingleCar, id),
     };
 

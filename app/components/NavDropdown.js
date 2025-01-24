@@ -83,9 +83,9 @@ export default function NavDropdown({ items, imagePath, title, type }) {
                             <div key={index} className='col-4 p-3 border-end border-bottom shadow shadow-sm'>
                                 <Link href={
                                     type === 'brands'
-                                        ? `/car-brand?id=${item?.id}`
+                                        ? `/cheapest-car-rentals/brand/${item?.slug}`
                                         : type === 'types'
-                                            ? `/car-category?id=${item?.id}`
+                                            ? `/cheapest-car-rentals/category/${item?.slug}`
                                             : '/'
                                 } className='d-flex text-decoration-none text-dark align-items-center justify-content-between'>
                                     {item?.image ? (

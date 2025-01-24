@@ -20,7 +20,7 @@ const CarCategory = () => {
 
     // const name = searchParams.get('name');
 
-    const { getCarsByBrand } = useApi();
+    const { getCarsByType } = useApi();
     const [cars, setCars] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [imageBasePath, setImageBasePath] = useState('');
@@ -30,12 +30,12 @@ const CarCategory = () => {
 
     async function loadCars(page, limit, id) {
         try {
-            const response = await getCarsByBrand(page, limit, id);
+            const response = await getCarsByType(page, limit, id);
             const { cars: carsData, total } = response.data.cars || {};
             setCars(carsData || []);
             setImageBasePath(`${response?.data?.cars?.base_url}/${response?.data?.cars?.image_path}/`);
             setTotalPages(Math.ceil(response?.data?.cars?.total / limit));
-            setBrand(response?.data?.cars?.brand);
+            setBrand(response?.data?.cars?.type);
         } catch (error) {
             console.error("Error loading cars:", error);
         }

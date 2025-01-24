@@ -58,7 +58,7 @@ export async function fetchCarsByBrand(page, limit = 10, name) {
 }
 
 export async function fetchCarsByType(page, limit = 10, name) {
-    const API_URL = `/api/car/type?page=${page}&limit=${limit}&name=${name}`;
+    const API_URL = `/api/car/by/type?page=${page}&limit=${limit}&name=${name}`;
     try {
         const response = await fetch(API_URL);
         if (!response.ok) {

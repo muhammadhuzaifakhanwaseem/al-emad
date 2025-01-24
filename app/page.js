@@ -10,7 +10,7 @@ import { LocalGasStation, CalendarToday, AccessTime } from '@mui/icons-material'
 import Image from 'next/image';
 import Link from 'next/link';
 
-const limit = 6;
+const limit = 3;
 
 const Home = () => {
     const searchParams = useSearchParams();
@@ -74,9 +74,11 @@ const Home = () => {
                                         {/* Car Features */}
                                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <Chip label={car.fuel_type} color="primary" size="small" icon={<LocalGasStation />} sx={{ fontWeight: 'bold' }} />
-                                            <Tooltip title="Car availability" placement="top">
-                                                <Chip label={car.is_available ? 'Available' : 'Not Available'} color={car.is_available ? 'success' : 'error'} size="small" />
-                                            </Tooltip>
+                                            {car.featured ?
+                                                <Tooltip title="Car availability" placement="top">
+                                                    <Chip label={'Featured'} color={'success'} size="small" />
+                                                </Tooltip>
+                                                : ""}
                                         </Box>
 
                                         {/* Car Image */}

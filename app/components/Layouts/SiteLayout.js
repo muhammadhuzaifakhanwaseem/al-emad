@@ -17,6 +17,7 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid2';
 import NavDropdown from "../NavDropdown";
+import SiteDrawer from "../SiteDrawer";
 
 const SiteLayout = ({ children }) => {
   const router = useRouter();
@@ -117,28 +118,29 @@ const SiteLayout = ({ children }) => {
       <AppBar position="sticky" color="default">
         <Container maxWidth="xl">
           <Toolbar className="d-flex align-items-center justify-content-between" disableGutters>
+            <div className="d-block d-md-none">
+              <SiteDrawer types={types} brands={brands} />
+            </div>
             <Link href={'/'} className="nav-link d-block fs-3 fw-bold me-2">
               Al Emad
             </Link>
-            <div>
-              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {/* PAGES */}
-                <Link href="/about-us" className={`ms-2 text-decoration-none ${router.pathname === "/contact" ? "text-primary" : "text-dark"}`}>
-                  About Us
-                </Link>
-                <Link href="/cheapest-car-rentals" className={`ms-2 text-decoration-none ${router.pathname === "/cheapest-car-rentals" ? "text-primary" : "text-dark"}`}>
-                  Rent a Car
-                </Link>
-                {brands &&
-                  <NavDropdown type={'brands'} title={'Car Brands'} items={brands?.data?.brands} imagePath={brands?.data?.base_url + "/" + brands?.data?.image_path + "/"} />
-                }
-                {types &&
-                  <NavDropdown type={'types'} title={'Car Categories'} items={types?.data?.types} imagePath={types?.data?.base_url + "/" + types?.data?.image_path + "/"} />
-                }
-                <Link href="/contact" className={`ms-2 text-decoration-none ${router.pathname === "/contact" ? "text-primary" : "text-dark"}`}>
-                  Contact
-                </Link>
-              </Box>
+            <div className="d-none d-md-block d-flex align-items-center">
+              {/* PAGES */}
+              <Link href="/about-us" className={`ms-2 text-decoration-none ${router.pathname === "/contact" ? "text-primary" : "text-dark"}`}>
+                About Us
+              </Link>
+              <Link href="/cheapest-car-rentals" className={`ms-2 text-decoration-none ${router.pathname === "/cheapest-car-rentals" ? "text-primary" : "text-dark"}`}>
+                Rent a Car
+              </Link>
+              {brands &&
+                <NavDropdown type={'brands'} title={'Car Brands'} items={brands?.data?.brands} imagePath={brands?.data?.base_url + "/" + brands?.data?.image_path + "/"} />
+              }
+              {types &&
+                <NavDropdown type={'types'} title={'Car Categories'} items={types?.data?.types} imagePath={types?.data?.base_url + "/" + types?.data?.image_path + "/"} />
+              }
+              <Link href="/contact" className={`ms-2 text-decoration-none ${router.pathname === "/contact" ? "text-primary" : "text-dark"}`}>
+                Contact
+              </Link>
             </div>
             <Box sx={{ flexGrow: 0 }}>
               <div className="d-flex align-items-center gap-2">
@@ -179,13 +181,13 @@ const SiteLayout = ({ children }) => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Link href={'/dashboard/bookings'} className="text-decoration-none" sx={{ textAlign: 'center' }}>Bookings</Link>
+                  <Link href={'/dashboard/bookings'} className="text-decoration-none text-dark" sx={{ textAlign: 'center' }}>Bookings</Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Link href={'/dashboard/profile'} className="text-decoration-none" sx={{ textAlign: 'center' }}>Profile</Link>
+                  <Link href={'/dashboard/profile'} className="text-decoration-none text-dark" sx={{ textAlign: 'center' }}>Profile</Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography color="error" onClick={logout} className="text-decoration-none" sx={{ textAlign: 'center' }}>Logout</Typography>
+                  <Typography onClick={logout} className="text-danger text-decoration-none" sx={{ textAlign: 'center' }}>Logout</Typography>
                 </MenuItem>
               </Menu>
             </Box>
